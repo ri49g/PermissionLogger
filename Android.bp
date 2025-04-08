@@ -1,0 +1,43 @@
+// Build definition for the PermissionLogger privileged application
+
+android_app {
+    // Module name used in PRODUCT_PACKAGES and for dependency references (e.g., "-java" suffix for AIDL)
+    name: "PermissionLogger",
+
+    // Source files (Java and AIDL)
+    srcs: [
+        "src/**/*.java",
+        "src/**/IPermissionLogger.aidl",
+    ],
+
+    // Indicate use of platform APIs (like ServiceManager) not available in public SDK
+    platform_apis: true,
+
+    // Sign with the platform certificate (required for system UID and privileged status)
+    certificate: "platform",
+
+    // Mark as a privileged app (installs to /system/priv-app, grants extra permissions)
+    privileged: true,
+
+    // Required resource directories (even if empty, needed for android_app)
+    // Create an empty 'res' directory if you don't have one: mkdir packages/apps/PermissionLogger/res
+    resource_dirs: ["res"],
+
+    // Point to the manifest file
+    manifest: "AndroidManifest.xml",
+
+    // Optimize settings (optional but recommended for release builds)
+    optimize: {
+        enabled: true, // enable optimizations like Proguard/R8 if configured
+        // Proguard/R8 flags can be added here if needed later, but often not
+        // required for simple system services without UI or complex dependencies.
+        // proguard_flags_files: ["proguard.flags"],
+    },
+
+    // Specify module owner (optional, good practice)
+    // owner: "YourGitHubUsernameOrTeam",
+}
+
+// Implicitly, the build system will also generate a library containing the AIDL stubs,
+// typically named "PermissionLogger-java", which other modules (like PermissionController)
+// can depend on via their static_libs property.
