@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.permissionlogger"
+    android:sharedUserId="android.uid.system"> <!-- CRITICAL: Run as system UID for permissions -->
+
+    <!-- No specific <uses-permission> tags are usually needed when running as system UID,
+         as it grants most permissions implicitly. Access control is primarily enforced
+         by SELinux policies for IPC (Binder calls) and file system access. -->
+
+    <application
+        android:label="Permission Logger"
+        android:persistent="true"  > <!-- Request that the system keep this app's process running -->
+
+        <!-- Define the Service -->
+        <service
+            android:name=".PermissionLoggerService"
+            android:exported="true" > <!-- Must be exported=true for ServiceManager.addService/getService -->
+            <!-- No intent-filter needed if using ServiceManager by name -->
+       </service>
+
+    </application>
+</manifest>
